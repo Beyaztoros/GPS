@@ -16,8 +16,6 @@ let directionsRenderer = null;
 
 // Esta función dibuja el mapa y coloca un marcador seleccionable en la FEI
 function dibujaMapa() {
-    $('#Tiempo').val("No jala");
-            $('#Distancia').val(navigator);
     mapa = $('#mapa').locationpicker({
         location: { latitude: latitud, longitude: longitud },
         radius: 300,
@@ -28,22 +26,14 @@ function dibujaMapa() {
             locationNameInput: $('#Localizador')
         },
         enableAutocomplete: true,
-        enableReverseGeocode: true,
-        onchanged: function (currentLocation, radius, isMarkerDropped) {
-            latitud = currentLocation.latitude;
-            longitud = currentLocation.longitude;
-            $('#Tiempo').val("No jala");
-            $('#Distancia').val(navigator);
-            distancia();
-        }
+        enableReverseGeocode: true
     });
+    $('#Distancia').val("No");
 }
 
 function miUbicacion() {
     // Obtiene el mapa
     let mapContext = mapa.locationpicker('map');
-    $('#Tiempo').val("No jala");
-    $('#Distancia').val(navigator);
     // Probamos el API HTML5 de geolocalización esta disponible en el cliente
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -55,7 +45,7 @@ function miUbicacion() {
                     position: { lat: latitudHome, lng: longitudHome },
                     map: mapContext.map,
                     title: "Esta es tu ubicación actual",
-                    icon: "images/home.png"
+                    icon: "../images/home.png"
                 });
                 distancia();
             }
