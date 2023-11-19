@@ -52,12 +52,12 @@ function miUbicacion() {
                 });
                 distancia();
             },
-            (error) => {
-                $('#Distancia').val(`La localización no está activada. ${err.message}`);
+            () => {
+                $('#Distancia').val("La localización no está activada.");
             }
         );
     } else {
-        alert("El navegador no soporta geolocalización");
+        $('#Distancia').val("El navegador no soporta geolocalización");
     }
 }
 
