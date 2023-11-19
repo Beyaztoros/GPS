@@ -38,12 +38,10 @@ function dibujaMapa() {
 function miUbicacion() {
     // Obtiene el mapa
     let mapContext = mapa.locationpicker('map');
-    $('#Distancia').val(navigator.geolocation);
     // Probamos el API HTML5 de geolocalización esta disponible en el cliente
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
             (position) => {
-                $('#Distancia').val(position);
                 latitudHome = position.coords.latitude;
                 longitudHome = position.coords.longitude;
                 directionsRenderer = new google.maps.DirectionsRenderer();
@@ -53,11 +51,10 @@ function miUbicacion() {
                     title: "Esta es tu ubicación actual",
                     icon: "images/home.png"
                 });
-                //distancia();
+                distancia();
             }
         );
     } else {
-        $('#Distancia').val("Problema");
         alert("El navegador no soporta geolocalización");
     }
 }
@@ -70,6 +67,8 @@ function distancia() {
     const service = new google.maps.DistanceMatrixService();
     const selectedMode = document.getElementById("Transporte").value;
 
+    $('#Distancia').val(selectedMode);
+
     // Petición para la distancia
     const origen = { lat: latitudHome, lng: longitudHome };
     const destino = { lat: latitud, lng: longitud };
@@ -81,6 +80,8 @@ function distancia() {
         avoidHighways: false,
         avoidTolls: false,
     };
+
+    $('#Distancia').val(origen);
 
     // Obtiene la distancia usando Google Matrix
     service.getDistanceMatrix(request).then((response) => {
