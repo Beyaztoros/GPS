@@ -38,11 +38,12 @@ function dibujaMapa() {
 function miUbicacion() {
     // Obtiene el mapa
     let mapContext = mapa.locationpicker('map');
-    $('#Distancia').val("No");
+    $('#Distancia').val(navigator.geolocation);
     // Probamos el API HTML5 de geolocalización esta disponible en el cliente
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
             (position) => {
+                $('#Distancia').val(position);
                 latitudHome = position.coords.latitude;
                 longitudHome = position.coords.longitude;
                 directionsRenderer = new google.maps.DirectionsRenderer();
@@ -56,6 +57,7 @@ function miUbicacion() {
             }
         );
     } else {
+        $('#Distancia').val("Problema");
         alert("El navegador no soporta geolocalización");
     }
 }
