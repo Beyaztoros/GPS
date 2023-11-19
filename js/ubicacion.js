@@ -38,9 +38,10 @@ function dibujaMapa() {
 function miUbicacion() {
     // Obtiene el mapa
     let mapContext = mapa.locationpicker('map');
+    alert("No jala");
+    alert(navigator);
     // Probamos el API HTML5 de geolocalización esta disponible en el cliente
     if (navigator.geolocation) {
-        alert("No jala");
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 latitudHome = position.coords.latitude;
