@@ -26,7 +26,7 @@ function dibujaMapa() {
             locationNameInput: $('#Localizador')
         },
         enableAutocomplete: true,
-        enableReverseGeocode: true
+        enableReverseGeocode: true,
     });
     $('#Distancia').val("No");
 }
@@ -34,6 +34,7 @@ function dibujaMapa() {
 function miUbicacion() {
     // Obtiene el mapa
     let mapContext = mapa.locationpicker('map');
+    $('#Distancia').val("No 2");
     // Probamos el API HTML5 de geolocalización esta disponible en el cliente
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
