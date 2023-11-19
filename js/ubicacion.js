@@ -55,7 +55,7 @@ function miUbicacion() {
             }
         );
     } else {
-        alert("El navegador no soporta geolocalización");
+        $('#Distancia').val("Verifique que la geolocalización este activada.");
     }
 }
 
