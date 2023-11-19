@@ -27,14 +27,18 @@ function dibujaMapa() {
         },
         enableAutocomplete: true,
         enableReverseGeocode: true,
+        onchanged: function (currentLocation, radius, isMarkerDropped) {
+            latitud = currentLocation.latitude;
+            longitud = currentLocation.longitude;
+            distancia();
+        }
     });
-    $('#Distancia').val("No");
 }
 
 function miUbicacion() {
     // Obtiene el mapa
     let mapContext = mapa.locationpicker('map');
-    $('#Distancia').val("No 2");
+    $('#Distancia').val("No");
     // Probamos el API HTML5 de geolocalización esta disponible en el cliente
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -46,7 +50,7 @@ function miUbicacion() {
                     position: { lat: latitudHome, lng: longitudHome },
                     map: mapContext.map,
                     title: "Esta es tu ubicación actual",
-                    icon: "../images/home.png"
+                    icon: "images/home.png"
                 });
                 distancia();
             }
