@@ -57,6 +57,7 @@ function miUbicacion() {
     } else {
         alert("El navegador no soporta geolocalización");
     }
+    distancia();
 }
 
 function distancia() {
