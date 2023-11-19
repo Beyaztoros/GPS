@@ -55,7 +55,7 @@ function miUbicacion() {
                     position: { lat: latitudHome, lng: longitudHome },
                     map: mapContext.map,
                     title: "Esta es tu ubicación actual",
-                    icon: "../images/home.png"
+                    icon: "images/home.png"
                 });
                 distancia();
             }
