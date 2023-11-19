@@ -53,7 +53,7 @@ function miUbicacion() {
                     title: "Esta es tu ubicación actual",
                     icon: "images/home.png"
                 });
-                distancia();
+                //distancia();
             }
         );
     } else {
