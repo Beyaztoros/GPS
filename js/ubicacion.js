@@ -8,11 +8,11 @@ let mapa = null;	// Mapa de Google Maps
 let latitud = 19.541142;
 let longitud = -96.9271873;
 // Coordenadas de donde esta el cliente
-let latitudHome = latitud;
-let longitudHome = longitud;
+let latitudHome;
+let longitudHome;
 let transportesSelect = document.getElementById("Transporte");
 let rutaCheck = document.querySelector("#Ruta");
-let directionsRenderer = new google.maps.DirectionsRenderer();
+let directionsRenderer = null;
 
 // Esta función dibuja el mapa y coloca un marcador seleccionable en la FEI
 function dibujaMapa() {
@@ -33,7 +33,6 @@ function dibujaMapa() {
             distancia();
         }
     });
-    distancia();
 }
 
 function miUbicacion() {
@@ -45,7 +44,7 @@ function miUbicacion() {
             (position) => {
                 latitudHome = position.coords.latitude;
                 longitudHome = position.coords.longitude;
-                
+                directionsRenderer = new google.maps.DirectionsRenderer();
                 new google.maps.Marker({
                     position: { lat: latitudHome, lng: longitudHome },
                     map: mapContext.map,
