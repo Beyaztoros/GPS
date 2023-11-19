@@ -8,11 +8,11 @@ let mapa = null;	// Mapa de Google Maps
 let latitud = 19.541142;
 let longitud = -96.9271873;
 // Coordenadas de donde esta el cliente
-let latitudHome;
-let longitudHome;
+let latitudHome = latitud;
+let longitudHome = longitud;
 let transportesSelect = document.getElementById("Transporte");
 let rutaCheck = document.querySelector("#Ruta");
-let directionsRenderer = null;
+let directionsRenderer = new google.maps.DirectionsRenderer();
 
 // Esta función dibuja el mapa y coloca un marcador seleccionable en la FEI
 function dibujaMapa() {
@@ -33,6 +33,7 @@ function dibujaMapa() {
             distancia();
         }
     });
+    distancia();
 }
 
 function miUbicacion() {
@@ -44,7 +45,7 @@ function miUbicacion() {
             (position) => {
                 latitudHome = position.coords.latitude;
                 longitudHome = position.coords.longitude;
-                directionsRenderer = new google.maps.DirectionsRenderer();
+                
                 new google.maps.Marker({
                     position: { lat: latitudHome, lng: longitudHome },
                     map: mapContext.map,
@@ -57,58 +58,55 @@ function miUbicacion() {
     } else {
         alert("El navegador no soporta geolocalización");
     }
-    distancia();
 }
 
 function distancia() {
     // Obtiene el mapa
     let mapContext = mapa.locationpicker('map');
 
-    $('#Distancia').val(mapContext);
-
     // Inicia los servicios para la distancia
-    // const service = new google.maps.DistanceMatrixService();
-    // const selectedMode = document.getElementById("Transporte").value;
+    const service = new google.maps.DistanceMatrixService();
+    const selectedMode = document.getElementById("Transporte").value;
 
-    // // Petición para la distancia
-    // const origen = { lat: latitudHome, lng: longitudHome };
-    // const destino = { lat: latitud, lng: longitud };
-    // const request = {
-    //     origins: [origen],
-    //     destinations: [destino],
-    //     travelMode: google.maps.TravelMode[selectedMode],
-    //     unitSystem: google.maps.UnitSystem.METRIC,
-    //     avoidHighways: false,
-    //     avoidTolls: false,
-    // };
+    // Petición para la distancia
+    const origen = { lat: latitudHome, lng: longitudHome };
+    const destino = { lat: latitud, lng: longitud };
+    const request = {
+        origins: [origen],
+        destinations: [destino],
+        travelMode: google.maps.TravelMode[selectedMode],
+        unitSystem: google.maps.UnitSystem.METRIC,
+        avoidHighways: false,
+        avoidTolls: false,
+    };
 
-    // // Obtiene la distancia usando Google Matrix
-    // service.getDistanceMatrix(request).then((response) => {
-    //     if (response.rows.length > 0) {
-    //         $('#Distancia').val(response.rows[0].elements[0].distance.text);
-    //         $('#Tiempo').val(response.rows[0].elements[0].duration.text);
-    //     }
-    // });
+    // Obtiene la distancia usando Google Matrix
+    service.getDistanceMatrix(request).then((response) => {
+        if (response.rows.length > 0) {
+            $('#Distancia').val(response.rows[0].elements[0].distance.text);
+            $('#Tiempo').val(response.rows[0].elements[0].duration.text);
+        }
+    });
 
-    // // Ahora vamos a dibujar la ruta
-    // if (rutaCheck.checked) {
-    //     const directionsService = new google.maps.DirectionsService();
-    //     directionsRenderer.setMap(mapContext.map);
+    // Ahora vamos a dibujar la ruta
+    if (rutaCheck.checked) {
+        const directionsService = new google.maps.DirectionsService();
+        directionsRenderer.setMap(mapContext.map);
 
-    //     directionsService
-    //         .route({
-    //             origin: origen,
-    //             destination: destino,
-    //             // Javascript nos permite acceder a la constante usando corchetes y un valor 
-    //             // de cadena como la propiedad
-    //             travelMode: google.maps.TravelMode[selectedMode],
-    //         })
-    //         .then((response) => {
-    //             directionsRenderer.setDirections(response);
-    //         });
-    // }else{
-    //     directionsRenderer.setMap(null);
-    // }
+        directionsService
+            .route({
+                origin: origen,
+                destination: destino,
+                // Javascript nos permite acceder a la constante usando corchetes y un valor 
+                // de cadena como la propiedad
+                travelMode: google.maps.TravelMode[selectedMode],
+            })
+            .then((response) => {
+                directionsRenderer.setDirections(response);
+            });
+    }else{
+        directionsRenderer.setMap(null);
+    }
 }
 
 
