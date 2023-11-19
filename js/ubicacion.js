@@ -44,10 +44,6 @@ function miUbicacion() {
             (position) => {
                 latitudHome = position.coords.latitude;
                 longitudHome = position.coords.longitude;
-                if (latitudHome == null) {
-                    $('#Distancia').val("La localización no está activada.");
-                    return;
-                }
                 new google.maps.Marker({
                     position: { lat: latitudHome, lng: longitudHome },
                     map: mapContext.map,
@@ -55,6 +51,9 @@ function miUbicacion() {
                     icon: "images/home.png"
                 });
                 distancia();
+            },
+            (error) => {
+                $('#Distancia').val(`La localización no está activada. ${err.message}`);
             }
         );
     } else {
