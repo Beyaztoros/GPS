@@ -16,6 +16,8 @@ let directionsRenderer = null;
 
 // Esta función dibuja el mapa y coloca un marcador seleccionable en la FEI
 function dibujaMapa() {
+    $('#Tiempo').val("No jala");
+            $('#Distancia').val(navigator);
     mapa = $('#mapa').locationpicker({
         location: { latitude: latitud, longitude: longitud },
         radius: 300,
