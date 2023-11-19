@@ -63,7 +63,7 @@ function distancia() {
     // Obtiene el mapa
     let mapContext = mapa.locationpicker('map');
 
-    $('#Distancia').val(origen);
+    $('#Distancia').val(mapContext);
 
     // Inicia los servicios para la distancia
     // const service = new google.maps.DistanceMatrixService();
